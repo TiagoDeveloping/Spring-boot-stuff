@@ -1,0 +1,49 @@
+/* Navigation bar styles */
+.navbar {
+    background-color: #333; /* Dark background color */
+    color: #fff; /* Text color */
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left; /* Float links to the left */
+    display: block; /* Display links as block elements */
+    color: inherit; /* Inherit text color */
+    text-align: center; /* Center-align text */
+    padding: 14px 16px; /* Padding around text */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.navbar a:hover {
+    background-color: #555; /* Darker background color on hover */
+}
+
+/* Dropdown menu styles */
+.dropdown {
+    float: left; /* Float dropdown to the left */
+    overflow: hidden; /* Hide overflow content */
+}
+
+.dropdown .dropdown-content {
+    display: none; /* Hide dropdown content by default */
+    position: absolute; /* Position dropdown content absolutely */
+    background-color: #333; /* Dark background color */
+    min-width: 160px; /* Minimum width of dropdown content */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Add shadow effect */
+    z-index: 1; /* Set z-index to bring dropdown above other content */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block; /* Display dropdown content on hover */
+}
+
+.dropdown-content a {
+    color: #fff; /* Text color */
+    padding: 12px 16px; /* Padding around text */
+    display: block; /* Display links as block elements */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.dropdown-content a:hover {
+    background-color: #555; /* Darker background color on hover */
+}

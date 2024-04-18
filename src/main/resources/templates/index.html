@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <!-- Include any global CSS stylesheets -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+    <!-- Include header fragment -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <!-- Your main content here -->
+    <div>
+        <h1>Welcome to My Website!</h1>
+        <p>This is the main content of the page.</p>
+    </div>
+
+    <!-- Include footer fragment -->
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

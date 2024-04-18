@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Details</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .post-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .post-container h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .post-container p {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .not-found {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="post-container" th:if="${post}">
+        <h1>Post Details</h1>
+        <h2 th:text="${post.title}"></h2>
+        <p th:text="${post.content}"></p>
+    </div>
+
+    <div class="not-found" th:unless="${post}">
+        <p>Post not found.</p>
+    </div>
+</body>
+</html>

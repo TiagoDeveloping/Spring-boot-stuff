@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/styles.css">
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f8f8f8;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.container {
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+			
+			.chat-window {
+				background-color: #fff;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+				border-radius: 5px;
+				padding: 20px;
+			}
+			
+			.messages-container {
+				height: 300px;
+				overflow-y: scroll;
+				border: 1px solid #ccc;
+				padding: 10px;
+				margin-bottom: 10px;
+			}
+			
+			.message-form {
+				display: flex;
+				align-items: center;
+			}
+			
+			.message-form input[type="text"] {
+				flex: 1;
+				padding: 10px;
+				margin-right: 10px;
+				border: 1px solid #ccc;
+				border-radius: 3px;
+			}
+			
+			.message-form button {
+				padding: 10px 20px;
+				background-color: #007bff;
+				color: #fff;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+			}
+			
+			.message-form button:hover {
+				background-color: #0056b3;
+			}
+		</style>
+		<script>
+        var globalString = '';  // Global variable to store the retrieved string
+        var socket;  // WebSocket object
+
+        // Function to establish WebSocket connection
+        function connectWebSocket(socketUrl) {
+            socket = new WebSocket(socketUrl);
+
+            // WebSocket event handlers
+            socket.onopen = function(event) {
+                console.log('WebSocket connection established');
+            };
+
+            socket.onmessage = function(event) {
+                console.log('Received message:', event.data);
+                // Handle incoming WebSocket messages here
+            };
+
+            socket.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+
+            socket.onclose = function(event) {
+                console.log('WebSocket connection closed');
+            };
+        }
+
+        // Function to handle button click event
+        function setup() {
+            document.getElementById('send_btn').addEventListener('click', function() {
+                // Make a GET request using fetch API
+                fetch('/chat/getEndpoint')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();  // Assuming the response contains a text/string
+                    })
+                    .then(data => {
+                        // Store the retrieved string in the global variable
+                        globalString = data;
+                        console.log('Retrieved string:', globalString);
+                        alert('Retrieved string: ' + globalString);
+
+                        // Construct WebSocket URL based on the retrieved string
+                        var socketUrl = 'ws://localhost:8080/chats/' + globalString;  // Example: ws://example.com/socket
+
+                        // Connect to WebSocket server
+                        connectWebSocket(socketUrl);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error occurred while fetching data');
+                    });
+            });
+        }
+
+        // Execute setup() only after the page has loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            setup();  // Call setup() when DOM is fully loaded
+        });
+    </script>
+	</head>
+	<body>
+	<div th:replace="fragments/header :: header"></div>
+		<div class="container">
+			<div class="chat-window">
+				<input type="text" name="username" placeholder="To..." required>
+				<div class="messages-container" id="messagesContainer">
+					<!-- Message will be displayed here -->
+				</div>
+	
+				<input type="text" name="message" placeholder="Type your message..."
+					required>
+				<button id="send_btn">Send</button>
+			</div>
+		</div>
+    <div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>
